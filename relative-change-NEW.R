@@ -208,53 +208,10 @@ lines(range_corr,res_corr[2,],type='b',pch=19,col=2)
 lines(range_corr,res_corr[3,],type='b',pch=20,col=3)
 lines(range_corr,res_corr[4,],type='b',pch=21,col=4)
 legend("topright",text.width = 1.5*strwidth(expression(paste(rho, " = ", 0.4))),
-       legend = c(expression(paste(hat(rho), " = ", 0.2)),
-                             expression(paste(hat(rho), " = ", 0.4)),
-                             expression(paste(hat(rho), " = ", 0.6)),
-                             expression(paste(hat(rho), " = ", 0.8))), pch = 18:21,col=1:4)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                      0     0.1  0.2  0.3  0.4    0.5   0.6   0.7  0.8  0.9
-
-res_corr <- matrix(c(0.003,0.0025,0,0.002,0.0024,0.005,0.007,0.01,0.018,0.024,
-                     0.008,0.006,0.003,0.0025,0,0.0028,0.0075,0.008,0.016,0.02,
-                     0.016,0.012,0.010,0.006,0.004,0.003,0,-0.001,0.004,0.01,
-                     0.03,0.02,0.018,0.017,0.01,0.008,0.006,0.005,0,0.006),nrow=4,ncol=10,
-                   byrow=TRUE)
-
-plot(range_corr, res_corr[1,]  ,type='b',pch=18,col=1,ylim=c(-0.001,0.05),
-     ylab='Relative change in ES',xlab='Predictive Correlation',cex=1.5,cex.lab=1.5)
-lines(range_corr,res_corr[2,],type='b',pch=19,col=2)
-lines(range_corr,res_corr[3,],type='b',pch=20,col=3)
-lines(range_corr,res_corr[4,],type='b',pch=21,col=4)
-legend("top",text.width = 1.5*strwidth(expression(paste(rho, " = ", 0.4))),
        legend = c(expression(paste(rho, " = ", 0.2)),
                              expression(paste(rho, " = ", 0.4)),
                              expression(paste(rho, " = ", 0.6)),
-                             expression(paste(rho, " = ", 0.8))), pch = 18:21,col=1:4,
-                              cex=1.2)
-
-
-
-
-
-
-
+                             expression(paste(rho, " = ", 0.8))), pch = 18:21,col=1:4)
 
 
 
