@@ -1,30 +1,7 @@
 
 
-
-
-
-mean=1152
-sd=84
-x <- seq(-3.5,3.5,length=10000)*sd + mean
-y <- dnorm(x,mean,sd)
-
-
-plot(x, y, type="l")
-polygon(c( x[x>=1250], max(x) ),  c(y[x==max(x)], y[x>=1250] ), col="red")
-
-polygon(c( x[x>=1250], 1250 ), 
-        c(y[x>=1250],0 ), col="red")
-
-
-
-###############################################
-
 par(mfrow=c(1,2))
-
-
-z <- pnorm(x,mean,sd)
 k <- rnorm(10000)
-
 plot(ecdf(k),lwd=3,col='red',xlab='',ylab='CDF',main='Probabilistic Forecast')
 x <- seq(-5,5,length=100000)
 y <- pnorm(x)
