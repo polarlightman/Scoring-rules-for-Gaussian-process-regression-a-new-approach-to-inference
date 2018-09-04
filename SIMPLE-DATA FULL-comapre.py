@@ -45,9 +45,7 @@ def chol_solve(B,A):
      s2=torch.gesv(s1,c)[0]
      return s2
 
-#a=train_x
-#u=inducing_x
-#b=train_x
+
 def Q(a,u,b):
     K_au=ARD(a,u,para_k,para_l)
     K_uu=ARD(u,u,para_k,para_l)
@@ -56,20 +54,6 @@ def Q(a,u,b):
     K_ub=ARD(u,b,para_k,para_l)
     Q_ab=K_au.mm(chol_solve(K_ub,K_uu_jittered))
     return Q_ab
-
-#def spgp_cal_mean_and_cov(k1,Q1,k2,k3,k4,k5,Q2,num_test,num_jitter,data_y):
-#     G=(torch.diag(
-#               k1-Q1+sigma_noise_sq*torch.eye(num_jitter)
-#                  )*torch.eye(num_jitter)
-#                    ).type(dtype)
-#     print('a')
-#     Lam=k2+k3.mm(chol_solve(k3.transpose(0,1),G))
-#     #Lam=Lam+0.1*torch.eye(num_inducing)
-#     print('b')
-#     mean_term=k4.mm(chol_solve(k3,Lam)).mm(chol_solve(data_y,G))
-#     print('c')
-#     cov_term=sigma_noise_sq*torch.eye(num_test).type(dtype)+k5-Q2+k4.mm(chol_solve(k4.transpose(0,1),Lam))
-#     return mean_term,cov_term
 
 def spgp_cal_mean_and_cov(k1,Q1,Q2,k2,num_test,num_jitter,data_y):
      G=(torch.diag(
@@ -118,7 +102,7 @@ def trivial_loss(m,c,data_y,data_yp):
     t_loss=(logs_sum-trivial).mean()
     return t_loss
 
-k1,k2,k3,num,eye_num,data_y= k_ff,k_ff,k_ff,num_train,num_train,train_y
+
 def cal_mean_and_cov(k1,k2,k3,num,eye_num,data_y):
      jittered_kff=k2+sigma_noise_sq*torch.eye(eye_num)
      res_mean=k1.mm(chol_solve(data_y,jittered_kff))
@@ -140,7 +124,7 @@ import pandas as pd
 import xlrd
 import random
 address1='H:\Project\DATA________________\kin40k.xlsx'
-address2='G:\!帝国理工\M00000-Summer-Project\DATA________________\kin40k.xlsx'
+
 
 
 xls=pd.ExcelFile(address1)
@@ -203,8 +187,7 @@ for j in range(TT):
     num_train=train_x.shape[0]
     num_test=test_x.shape[0]
     num_va=va_x.shape[0]
-    #num_inducing=300
-    #num_total=num_train+num_test+num_va
+
     
     itr=250
     CRPS_series=np.zeros(itr)
@@ -246,17 +229,7 @@ for j in range(TT):
 #            print('iteration:%d, k: %.5f, sigma_noise: %.5f,L: %.5f' % (
 #            i,torch.exp(para_k).pow(0.5),torch.exp(para_noise).pow(0.5),torch.exp(para_l).pow(0.5)
 #            ))
-##        validation
-#        k_ff =ARD(train_x,train_x,para_k,para_l)
-#        k_star_f =ARD(test_x,train_x,para_k,para_l)
-#        k_f_star = ARD(train_x,test_x,para_k,para_l)  
-#        k_ss =ARD(test_x,test_x,para_k,para_l)
-#    
-#        mean_term,cov_term=cal_mean_and_cov(k_star_f,k_ff,k_ss,num_test,eye_num=num_train,data_y=train_y)        
-#        cov_term=cov_term.diag().view(num_test,1)   
-#        
-#        CRPS_va=crps(mean_term,cov_term,test_y)
-#        CRPS_va_series[i]=CRPS_va.detach().numpy()
+
 
 
 
@@ -314,12 +287,7 @@ for j in range(TT):
            
     
     for i in range(itr):  
-        learning_rate=0.001
-    #    learning_rate=0.001
-    #    if i>260:
-    #        learning_rate=0.0001
-    #    elif i>80:
-    #        learning_rate=0.00001      
+        learning_rate=0.001     
         sigma_noise_sq=torch.exp(para_noise)
         k_ff = ARD(train_x,train_x,para_k,para_l)
         inverse_term_ml=k_ff+torch.eye(train_x.shape[0])*sigma_noise_sq
